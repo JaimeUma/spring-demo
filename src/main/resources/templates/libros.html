@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Libros</title>
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet"></link>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Libros</strong>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table
+					class="table table-sm table-striped table-hover table-bordered">
+					<thead>
+						<tr>
+							<th>ISBN</th>
+							<th>Nombre</th>
+							<th>Autor</th>
+							<th>Editor</th>
+							<th>Precio</th>
+							<th>Operaciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="libro : ${libros}">
+
+							<td th:text="${libro.isbn13}"></td>
+							<td th:text="${libro.nombre}"></td>
+							<td th:text="${libro?.autor?.nombre}"></td>
+							<td th:text="${libro?.editor?.nombre}"></td>
+							<td th:text="${libro.precio}"></td>
+							<td>
+								<div class="btn-group">
+
+									<form action="#" id="deleteForm" th:method="delete"
+										th:action="@{/libros/{id}(id=${libro.isbn13})}">
+										<input type="submit" class="delete btn btn-sm btn-danger"
+											value="Eliminar" />
+									</form>
+
+									<form action="#" id="editForm" th:method="get"
+										th:action="@{/libros/edit/{id}(id=${libro.isbn13})}">
+										<input type="submit" class="primary btn btn-sm btn-primary"
+											value="Editar" />
+									</form>
+
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div th:if="${delete != null && delete}" class="alert alert-success">
+			<strong>OK!</strong> El libro ha sido eliminado correctamente.
+		</div>
+		<div th:if="${delete != null && !delete}" class="alert alert-danger">
+			<strong>Error!</strong> Error eliminado el libro.
+		</div>
+		<div th:if="${update != null && update}" class="alert alert-success">
+			<strong>OK!</strong> El libro ha sido actualizada correctamente.
+		</div>
+		<div th:if="${update != null && !update}" class="alert alert-danger">
+			<strong>Error!</strong> Error al actualizar el libro.
+		</div>
+		<div th:if="${create != null && create}" class="alert alert-success">
+			<strong>OK!</strong> El libro ha sido creado correctamente.
+		</div>
+		<div th:if="${create != null && !create}" class="alert alert-danger">
+			<strong>Error!</strong>Error al crear el libro.
+		</div>
+		<div class="panel-footer">
+			<a class="btn btn-sm btn-success" th:href="@{/libros/add/}">Nuevo
+				libro</a> <a class="btn btn-sm btn-primary" th:href="@{/}">Atrás</a>
+		</div>
+	</div>
+</body>
+</html>

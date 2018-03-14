@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Pagina de login</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet"></link>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width" />
+
+<body>
+	<div class="container">
+		<form th:action="@{/login}" method="post">
+			<div>
+				<label> Email : <input type="text" name="username" />
+				</label>
+			</div>
+			<div>
+				<label> Contraseña: <input type="password" name="password" />
+				</label>
+			</div>
+			<div>
+				<input class="btn btn-primary" type="submit" value="Sign In" />
+			</div>
+
+			<div>
+				Usuario por defecto: test@test.com <br> Contraseña: test
+			</div>
+
+			<br>
+			<div>
+				<a class="btn btn-primary" href="/" role="button">Volver</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
