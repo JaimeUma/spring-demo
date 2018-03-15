@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +12,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Libro;
+import com.example.demo.model.LibroService;
+import com.example.demo.model.PersonaService;
 
 // Controlador de los objetos Libro
 @Controller
 public class LibroController {
-	/*---Interfaz para la gestion de datos de Libros---*/
-	@Autowired
-	LibroRepository repository;
 
-	/*---Interfaz para la gestion de datos de Personas---*/
 	@Autowired
-	PersonaRepository personaRepository;
+	LibroService libroService;
+
+	@Autowired
+	PersonaService personaService;
 
 	/*---Devuelve el template HTML de libros---*/
 	// petición recibida por get
 	@GetMapping("/libros")
 	public String listBookView(Model model) {
 		// datos que seran accesibles desde la plantilla (frontend)
-		model.addAttribute("libros", getLibros());
+		model.addAttribute("libros", libroService.getAll());
 		// devuelvo el template libros
 		return "libros";
 	}
@@ -39,17 +38,17 @@ public class LibroController {
 	/*---Devuelve el formulario para crear un libro---*/
 	@GetMapping("/libros/add")
 	public String addLibroView(Libro libro, Model model) {
-		model.addAttribute("personas", personaRepository.findAll());
+		model.addAttribute("personas", personaService.getAll());
 		model.addAttribute("libro", libro);
 		return "addLibro";
 	}
 
 	/*---Devuelve el formulario para editar un libro---*/
-	@GetMapping("/libros/edit/{id}")
-	public String editLibroView(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/libros/edit/{isbn}")
+	public String editLibroView(@PathVariable("isbn") Long isbn, Model model) {
 
-		model.addAttribute("personas", personaRepository.findAll());
-		model.addAttribute("libro", repository.getOne(id));
+		model.addAttribute("personas", personaService.getAll());
+		model.addAttribute("libro", libroService.getByIsbn13(isbn));
 		return "updateLibro";
 	}
 
@@ -58,7 +57,7 @@ public class LibroController {
 	@PostMapping("/libros")
 	public String save(@Valid Libro libro, BindingResult result, Model model) {
 		try {
-			repository.saveAndFlush(libro);
+			libroService.add(libro);
 			model.addAttribute("create", true);
 		} catch (Exception er) {
 			model.addAttribute("create", false);
@@ -71,7 +70,7 @@ public class LibroController {
 	@PostMapping("/libros/update")
 	public String update(@Valid Libro libro, Model model) {
 		try {
-			updateLibro(libro);
+			libroService.add(libro);
 			model.addAttribute("udpate", true);
 		} catch (Exception er) {
 			model.addAttribute("update", false);
@@ -81,30 +80,15 @@ public class LibroController {
 
 	/*---Elimina un libro a partir de su ISBN y vuelve a la pantalla de consulta de libros---*/
 	// petición recibida por delete
-	@DeleteMapping("/libros/{id}")
-	public String delete(@PathVariable("id") long id, Model model) {
+	@DeleteMapping("/libros/{isbn13}")
+	public String delete(@PathVariable("isbn13") long isbn13, Model model) {
 		try {
-			repository.deleteById(id);
+			libroService.delete(isbn13);
 			model.addAttribute("delete", true);
 		} catch (Exception er) {
 			model.addAttribute("delete", false);
 		}
 		return listBookView(model);
-	}
-
-	/*---Devuelve la lista de libros---*/
-	private List<Libro> getLibros() {
-		return repository.findAll();
-	}
-
-	/*---Actualiza un libro---*/
-	private void updateLibro(Libro libro) {
-		Libro l = repository.getOne(libro.getIsbn13());
-		l.setEditor(libro.getEditor());
-		l.setAutor(libro.getAutor());
-		l.setNombre(libro.getNombre());
-		l.setPrecio(libro.getPrecio());
-		repository.saveAndFlush(l);
 	}
 
 }

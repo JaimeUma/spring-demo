@@ -5,12 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.example.demo.controller.LibroRepository;
-import com.example.demo.controller.PersonaRepository;
-import com.example.demo.controller.UserRepository;
 import com.example.demo.model.Libro;
+import com.example.demo.model.LibroRepository;
 import com.example.demo.model.Persona;
+import com.example.demo.model.PersonaRepository;
 import com.example.demo.model.User;
+import com.example.demo.model.UserRepository;
 
 @SpringBootApplication
 public class DemoApplication {

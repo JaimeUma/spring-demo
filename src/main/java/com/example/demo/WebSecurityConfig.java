@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.controller.UserRepository;
-import com.example.demo.controller.UserRepositoryDetailsService;
 import com.example.demo.model.User;
+import com.example.demo.model.UserRepository;
+import com.example.demo.model.UserRepositoryDetailsService;
 
 @Configuration
 @EnableWebSecurity

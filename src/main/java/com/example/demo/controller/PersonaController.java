@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Persona;
+import com.example.demo.model.PersonaService;
 
 //Controlador de los objetos Persona
 @Controller
 public class PersonaController {
 
-	/*---Interfaz para la gestion de datos de Personas---*/
 	@Autowired
-	PersonaRepository repository;
+	PersonaService personaService;
 
 	/*---Devuelve el template de personas---*/
 	@GetMapping("/personas")
 	public String listPersonView(Model model) {
-		model.addAttribute("personas", getPersonas());
+		model.addAttribute("personas", personaService.getAll());
 		// devuelvo el template personas
 		return "personas";
 	}
@@ -34,7 +32,7 @@ public class PersonaController {
 	/*---Devuelve el formulario para crear una persona---*/
 	@GetMapping("/personas/add")
 	public String addPersonView(Persona persona, Model model) {
-		model.addAttribute("personas", repository.findAll());
+		model.addAttribute("personas", personaService.getAll());
 		model.addAttribute("persona", persona);
 		return "addPersona";
 	}
@@ -42,9 +40,8 @@ public class PersonaController {
 	/*---Devuelve el formulario para editar una persona---*/
 	@GetMapping("/personas/edit/{id}")
 	public String editPersonView(@PathVariable("id") String id, Model model) {
-		repository.getOne(id);
 		model.addAttribute("id", id);
-		model.addAttribute("persona", repository.getOne(id));
+		model.addAttribute("persona", personaService.getByDni(id));
 		return "updatePersona";
 	}
 
@@ -52,7 +49,7 @@ public class PersonaController {
 	@PostMapping("/personas")
 	public String save(@Valid Persona persona, BindingResult result, Model model) {
 		try {
-			repository.saveAndFlush(persona);
+			personaService.add(persona);
 			model.addAttribute("create", true);
 		} catch (Exception er) {
 			model.addAttribute("create", false);
@@ -64,10 +61,7 @@ public class PersonaController {
 	@PostMapping("/personas/update")
 	public String update(@Valid Persona persona, Model model) {
 		try {
-			Persona p = repository.getOne(persona.getDni());
-			p.setApellido(persona.getApellido());
-			p.setNombre(persona.getNombre());
-			repository.saveAndFlush(p);
+			personaService.update(persona);
 			model.addAttribute("udpate", true);
 		} catch (Exception er) {
 			model.addAttribute("update", false);
@@ -80,18 +74,12 @@ public class PersonaController {
 	public String delete(@PathVariable("id") String id, Model model) {
 
 		try {
-			repository.deleteById(id);
+			personaService.delete(id);
 			model.addAttribute("delete", true);
 		} catch (Exception er) {
-			;
 			model.addAttribute("delete", false);
 		}
 		return listPersonView(model);
-	}
-
-	/*---Devuelve la lista de personas---*/
-	private List<Persona> getPersonas() {
-		return repository.findAll();
 	}
 
 }

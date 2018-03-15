@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.model;
 
 import java.util.Collection;
 
@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.User;
 
+// hacer que el sistema de autenticación de spring coja los datos de usuario de la base de datos
 @Service
 public class UserRepositoryDetailsService implements UserDetailsService {
 	private final UserRepository userRepository;
