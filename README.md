@@ -29,3 +29,7 @@ La demo usa:
 * Para ver el contenido de la base de datos y gestionarla acceder a la dirección localhost:3029/console
 * Parámetros de configuración: fichero application.properties en la carpeta /src/main/resources
 
+
+## Ejecutar tests (JUnit y Mockito)
+
+1. Botón derecho en el proyecto y Run as -> JUnit test
