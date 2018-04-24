@@ -15,6 +15,7 @@ import com.example.demo.model.Libro;
 import com.example.demo.model.LibroRepository;
 import com.example.demo.model.LibroService;
 
+// Ejemplo de como probar la clase LibroService con un mock de la clase LibroRepository
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LibroTests {
@@ -35,6 +36,7 @@ public class LibroTests {
 
 	@Test
 	public void testGetOne() {
+		// definimos comportamiento del mock
 		Libro dummyLibro = new Libro();
 		dummyLibro.setIsbn13(ISBN_TEST);
 		dummyLibro.setNombre("titulo");
@@ -46,6 +48,7 @@ public class LibroTests {
 		when(libroRepository.getOne(anyLong())).thenReturn(dummyLibro2);
 		when(libroRepository.getOne(ISBN_TEST)).thenReturn(dummyLibro);
 
+		// definimos el test
 		Libro resultLibro = libroService.getByIsbn13(ISBN_TEST);
 		verify(libroRepository, times(1)).getOne(ISBN_TEST);
 		assertEquals(dummyLibro, resultLibro);
