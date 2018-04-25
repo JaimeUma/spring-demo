@@ -35,6 +35,9 @@ public class DemoApplication {
 			libroRepository.save(libro1);
 			libroRepository.save(libro2);
 
+			// ejemplo de como buscar usando un metodo que nos hemos definido
+			Libro l1 = libroRepository.findByNombre("Introduccion a Spring");
+			Libro libroInexistente = libroRepository.findByNombre("NONAME");
 		};
 	}
 
