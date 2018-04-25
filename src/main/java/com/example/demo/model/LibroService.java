@@ -29,6 +29,10 @@ public class LibroService {
 	public Libro getByIsbn13(long isbn13) {
 		return repository.getOne(isbn13);
 	}
+	
+	public Libro getByName(String name) {
+		return repository.findByNombre(name);
+	}
 
 	public void add(Libro libro) {
 		repository.saveAndFlush(libro);

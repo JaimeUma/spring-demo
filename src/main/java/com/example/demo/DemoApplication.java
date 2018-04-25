@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.demo.model.Libro;
-import com.example.demo.model.LibroRepository;
+import com.example.demo.model.LibroService;
 import com.example.demo.model.Persona;
-import com.example.demo.model.PersonaRepository;
+import com.example.demo.model.PersonaService;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -21,23 +21,23 @@ public class DemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(LibroRepository libroRepository, PersonaRepository personaRepository) {
+	public CommandLineRunner demo(LibroService libroService, PersonaService personaService) {
 		return (args) -> {
 			// crear datos al arrancar la aplicación
 			// se usa para meter datos de prueba
 			Persona alice = new Persona("Alice", "Wonderland", "666");
 			Persona ali = new Persona("Ali", "Baba", "777");
-			personaRepository.save(alice);
-			personaRepository.save(ali);
+			personaService.add(alice);
+			personaService.add(ali);
 
 			Libro libro1 = new Libro(12312l, "Introduccion a Spring", 100d, alice, ali);
 			Libro libro2 = new Libro(1122l, "Como aprobar introduccion a la ingeniería", 1000d, ali, alice);
-			libroRepository.save(libro1);
-			libroRepository.save(libro2);
+			libroService.add(libro1);
+			libroService.add(libro2);
 
-			// ejemplo de como buscar usando un metodo que nos hemos definido
-			Libro l1 = libroRepository.findByNombre("Introduccion a Spring");
-			Libro libroInexistente = libroRepository.findByNombre("NONAME");
+			// ejemplo de como buscar por nombre
+			Libro l1 = libroService.getByName("Introduccion a Spring");
+			Libro libroInexistente = libroService.getByName("NONAME");
 		};
 	}
 
