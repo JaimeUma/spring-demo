@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -56,6 +57,15 @@ public class MvcTest {
 		mockMvc.perform(get("/libros")).andDo(print())
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrlPattern("http://*/login"));
+	}
+	
+	// comprobar que accediendo directamente a la url libros con un usuario conectado, redirige al formulario de libros 
+	// correctamente, ademas de comprobar que tiene el string libros en el formulario
+	@Test
+	@WithMockUser
+	public void librosTest2() throws Exception {
+		mockMvc.perform(get("/libros")).andExpect(status().isOk())
+		.andExpect(content().string(containsString("libros")));
 	}
 
 }

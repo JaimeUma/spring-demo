@@ -28,8 +28,8 @@ La demo usa:
 * Main: clase DemoApplication en la carpeta src/main/java
 * Para ver el contenido de la base de datos y gestionarla acceder a la dirección localhost:3029/console
 * Parámetros de configuración: fichero application.properties en la carpeta /src/main/resources
-
-
+* Los ficheros de estilos (*.css) deben de situarse en la carpeta src/main/resources/static/css/. Crear las carpetas static y css si no existen.
+* Los ficheros JavaScript (*.js) deben de situarse en la carpeta src/main/resources/static/js/. Crear las carpetas static y js si no existen.
 ## Ejecutar tests (JUnit y Mockito)
 
 1. Botón derecho en el proyecto y Run as -> JUnit test

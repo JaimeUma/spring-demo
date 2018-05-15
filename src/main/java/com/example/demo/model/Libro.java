@@ -88,7 +88,8 @@ public class Libro {
 			return false;
 
 		final Libro other = (Libro) obj;
-		if (isbn13 != other.getIsbn13())
+		if (isbn13 != other.getIsbn13() || precio !=other.getPrecio() || nombre !=other.getNombre()
+				|| autor !=other.getAutor() || editor !=other.getEditor()) 
 			return false;
 
 		return true;

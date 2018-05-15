@@ -24,7 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// permitimos estas urls sin autenticacion
 				// console se usa para poder acceder a la pagina de configuracion de la base de
 				// datos
-				.antMatchers("/", "/console/**").permitAll().anyRequest().authenticated()
+				// permitir que ignore los ficheros de la carpeta css para evitar problemas de redireccion
+				// si se anaden mas ficheros como librerias javascripts, anadirlos a la carpeta /lib 
+				.antMatchers("/", "/console/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated()
 
 				.and()
 

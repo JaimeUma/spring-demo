@@ -33,7 +33,8 @@ public class LibroTests {
 	public void contextLoads() {
 		assertNotNull(libroService);
 	}
-
+	
+	// Comprueba que obtiene los libros definidos
 	@Test
 	public void testGetOne() {
 		// definimos comportamiento del mock
@@ -55,5 +56,25 @@ public class LibroTests {
 
 		Libro resultLibro2 = libroService.getByIsbn13(ISBN_TEST2);
 		assertEquals(dummyLibro2, resultLibro2);
+	}
+	
+	// Comprueba que el libro se actualiza correctamente
+	@Test
+	public void testUpdate() {
+		Libro resultLibro = libroService.getByIsbn13(ISBN_TEST);
+		resultLibro.setNombre("Nuevo nombre");
+		libroService.update(resultLibro);
+		Libro resultLibro2 = libroService.getByIsbn13(ISBN_TEST);
+		assertEquals(resultLibro2, resultLibro);
+		
+	}
+	
+	// Comprueba que el libro se elimina, con la llamada al metodo de libroRepository
+	@Test
+	public void testDelete() {
+		libroService.delete(ISBN_TEST); 
+		verify(libroRepository, times(1)).deleteById(ISBN_TEST);
+		
+		
 	}
 }
